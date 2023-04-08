@@ -4,4 +4,4 @@ fn main() {
     } else {
         println!("everything's fine!");
     }
-    }
+}

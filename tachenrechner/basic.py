@@ -9,7 +9,7 @@ except ValueError:
 
 operator = input("Wähle einen Operator:")
 
-if operator == "+" and "-" and "*" and ":":
+if operator == "+" or "-" or "*" or ":":
     print(operator)
 else:
     print("Es handelt sich hier um kein Valides Zeichen! Nutze + - * :")
@@ -22,6 +22,13 @@ except ValueError:
     print("#####   Eine Zahl eingeben!   ####")
     sys.exit(1)
 
-erghebnis = nummer1 'operator' nummer2
+if operator == "+":
+    erghebnis = nummer1 + nummer2
+elif operator == "-":
+    erghebnis = nummer1 - nummer2
+elif operator == "*":
+    erghebnis = nummer1 * nummer2
+elif operator == ":":
+    erghebnis = nummer1 / nummer2
 
-print(erghebnis)
+print("ergebnis", erghebnis)
