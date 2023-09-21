@@ -1,6 +1,6 @@
 <?php
 
-class fruit
+class fruit // eröffnet die klasse
 {
     ///properties
     public $name; /// setzt die variablen die als Platzhalter benutz werden um die funktionen zu benutzen
