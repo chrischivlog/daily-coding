@@ -1,26 +1,30 @@
 import csv
+import os
 
-inputer = 'input.csv'
-reference = 'reference.csv'
+#print(os.listdir('./'))
 
-# Read input file into memory
-input_data = set()
-with open(inputer, 'r', encoding='utf-8') as file:
-    reader = csv.reader(file, delimiter=';')
-    for row in reader:
-        # Combine ort and strasse to form a unique identifier for each row
-        ort_strasse_combo = f"{row[0]}_{row[1]}"
-        input_data.add(ort_strasse_combo)
+# Pfade der Eingabedateien und der Ausgabedatei
+datei_adress = 'adress-sort/input.csv'
+datei_ref = 'adress-sort/reference.csv'
+ausgabe_pfad = 'ergaenzte_datei_b.csv'
 
-# Now check each line in the reference file against the input data
-with open(reference, 'r', encoding='utf-8') as file_ref:
-    reader_ref = csv.reader(file_ref, delimiter=';')
-    for row_ref in reader_ref:
-        ort_strasse_combo_ref = f"{row_ref[0]}_{row_ref[1]}"
+# Lese Datei A in ein Dictionary für schnellen Zugriff
+adressen_a = {}
+with open(datei_adress, mode='r', encoding='utf-8') as datei_a:
+    
+    reader = csv.reader(datei_a, delimiter=';')
+    for ort, teilort, strasse in reader:
+        adressen_a[(ort, strasse)] = teilort
 
-        if ort_strasse_combo_ref in input_data:
-            # If the line from the reference file was found in the input file, print it
-            print(f"Found in input file: {row_ref[0]}, {row_ref[1]}")
-        else:
-            # If not found in the input file, print it from the reference file, indicating it's not in the input file
-            print(f"Not found in input file, from reference file: {row_ref[0]}, {row_ref[1]}")
+# Verarbeite Datei B und ergänze fehlende Teilorte aus Datei A
+with open(datei_ref, mode='r', encoding='utf-8') as datei_b, \
+        open(ausgabe_pfad, mode='w', encoding='utf-8', newline='') as ausgabe_datei:
+    
+    reader = csv.reader(datei_b, delimiter=';')
+    writer = csv.writer(ausgabe_datei, delimiter=';')
+
+    for ort, teilort, strasse in reader:
+        if teilort == '' and (ort, strasse) in adressen_a:  # Prüfe, ob Teilort fehlt und in A vorhanden ist
+            teilort = adressen_a[(ort, strasse)]
+        writer.writerow([ort, teilort, strasse])
+
