@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    function switchSelected(){
+        var other = document.getElementById("addSwitch"); 
+        if (document.forms[0].theItems.options[document.forms[0].theItems.selectedIndex].value == "addSwitch"){
+            other.style.visibility = "visible";
+        } else {
+            other.style.visibility = "hidden";
+        }
+    }
+</script>
+
+<body>
+<form action="" method="">
+    <select name="theItems" onchange="switchSelected()">
+        <option value="addFeature">New add Feature</option>
+        <option value="addSwitch">New Switch</option>
+    </select>
+
+    <div id="addSwitch" style="visibility: hidden;">
+            <br>
+        <b>Model number</b>
+            <input name="switche type" type="text">
+            <br>
+        <b>Brand Name</b>
+            <input name="brand" type="text">
+    </div>
+    
+</form>
+</body>
